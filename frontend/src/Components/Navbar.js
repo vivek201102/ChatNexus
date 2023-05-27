@@ -27,7 +27,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { CssBaseline, FormControlLabel, FormGroup, List } from '@mui/material';
-import { CheckBox } from '@mui/icons-material';
+
 
 
 const settings = ['Profile', 'Your Questions', 'Your Answers', 'Logout'];
@@ -103,7 +103,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-const Navbar = ({Search, SearchIconWrapper, StyledInputBase}) => {
+const Navbar = ({Search, SearchIconWrapper, StyledInputBase, ask, setAsk}) => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState('Home')
@@ -179,7 +179,7 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase}) => {
                       textDecoration: 'none',
                     }}
                   >
-                    Disc<span className='text-primary-red'>Us</span>
+                    Chat<span className='text-primary-red'>Nexus</span>
                   </Typography>
 
                   <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -203,7 +203,7 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase}) => {
                       textDecoration: 'none',
                     }}
                   >
-                    Disc<span className='text-primary-red'>Us</span>
+                    Chat<span className='text-primary-red'>Nexus</span>
                   </Typography>
 
                   {/* large screen size */}
@@ -225,7 +225,10 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase}) => {
 
                   <Box sx={{margin:"12px", display:{xs:"none", sm:"none", md:"flex"}, alignItems:"center"}}>
                     <Tooltip title="Ask your Question">
-                    <Button sx={{borderRadius: "25px", backgroundColor: "#FF3544", color:"#fff", paddingRight:"12px", paddingLeft:"12px", ":hover":{backgroundColor:"#FF3544"}}}> Add Question
+                    <Button sx={{borderRadius: "25px", backgroundColor: "#FF3544", color:"#fff", paddingRight:"12px", paddingLeft:"12px", ":hover":{backgroundColor:"#FF3544"}}} 
+                    onClick={()=>{
+                      setAsk(true)
+                    }}> Add Question
                       <AddIcon sx={{":hover": {backgroundColor:"#FF3541"}, marginLeft:"4px"}} /> 
                     </Button>
                     </Tooltip>
@@ -318,4 +321,4 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase}) => {
     );
 }
 
-export default Navbar
+export default Navbar;

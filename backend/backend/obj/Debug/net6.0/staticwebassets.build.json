@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "NAUGJdcsIFiaVYq3gloWiQlCIMO7f0urFDIbv9blXUU=",
+  "Source": "backend",
+  "BasePath": "_content/backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "backend\\wwwroot",
+      "Source": "backend",
+      "ContentRoot": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\wwwroot\\Questions\\Screenshot 2023-02-26 123416.png",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "Questions/Screenshot 2023-02-26 123416.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Questions\\Screenshot 2023-02-26 123416.png"
+    }
+  ]
+}
