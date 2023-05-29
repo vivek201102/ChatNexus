@@ -2,8 +2,9 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { Box, Fab, Grid, TextField } from "@mui/material";
 import { Card, CardActionArea, CardContent, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
+import { AskQuestionContext } from '../Context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: "none"
   },
-//   logo: {
-//     width: "100px",
-//     height: "100px"
-//   },
   submit: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -44,27 +41,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Description = () => {
     const classes = useStyles();
-    const { register,handleSubmit,reset } = useForm();
-    const [uploadState, setUploadState] = useState("initial");
-    const [image, setImage] = useState("");
-
-    const handleUploadClick = (event) => {
-        var file = event.target.files[0];
-        const reader = new FileReader();
-        if (file) {
-          reader.readAsDataURL(file);
-          reader.onloadend = function (e) {
-            setImage(reader.result);
-            setUploadState("uploaded");
-          };
-        }
-      };
+    const {onInputChange, img, setImg, inputData, setInputData, register,handleSubmit,reset, image, setImage, uploadState, handleUploadClick, handleResetClick} = useContext(AskQuestionContext);
     
-      const handleResetClick = (event) => {
-        setImage(null);
-        setUploadState("initial");
-        reset({ logo: null });
-      };
 
     return (
         <>
@@ -74,6 +52,9 @@ const Description = () => {
                     id="outlined-multiline-static"
                     label="Description"
                     multiline
+                    name='description'
+                    onChange={onInputChange}
+                    value={inputData.description}
                     rows={4}
                     placeholder="Describe your question"
                     fullWidth

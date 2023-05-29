@@ -27,6 +27,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { CssBaseline, FormControlLabel, FormGroup, List } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -124,6 +125,8 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase, ask, setAsk}) => {
         "tooltip": "Answers"
       },
     ]);
+
+    const navigate = useNavigate();
 
     const [anchorElUser, setAnchorElUser] = useState(null);
   
@@ -283,11 +286,11 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase, ask, setAsk}) => {
                       sx={{
                         minHeight: 48,
                         justifyContent: open ? 'initial' : 'center',
-                        
                         px:2.5
                       }}
                       >
                       <ListItemIcon
+                        onClick={()=>{navigate(`/${item.name}`)}}
                         sx={{
                           minWidth: 0,
                           mr: open ? 3 : 'auto',
@@ -295,6 +298,7 @@ const Navbar = ({Search, SearchIconWrapper, StyledInputBase, ask, setAsk}) => {
                           color: active == item.name ? "red" : "grey",
                           justifyContent: 'center'
                         }}
+                        
                       >
                         <Tooltip title={item.tooltip}>
                           {item.logo}

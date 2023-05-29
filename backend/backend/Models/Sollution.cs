@@ -12,6 +12,6 @@ namespace backend.Models
         public long QuestionId { get; set; }
         [ForeignKey("QuestionId")]
         public virtual Question Question { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

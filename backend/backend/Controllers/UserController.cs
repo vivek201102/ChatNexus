@@ -47,6 +47,11 @@ namespace backend.Controllers
 
             try
             {
+                User u = await _context.Users.Where(x => x.Username == user.Username).FirstOrDefaultAsync();
+                if (u != null)
+                {
+                    return BadRequest(u.Username + " is already taken");
+                }
                 user.Password = BCry.HashPassword(user.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
@@ -106,12 +111,12 @@ namespace backend.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> PostAuthenticateUser(LoginDTO loginDTO)
+        public async Task<ActionResult<User>> PostAuthenticateUser(Login loginDTO)
         {
             if (_context == null)
                 return NotFound();
             
-            var user = await _context.Users.Where(u => (u.Username == loginDTO.Username)).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(u => (u.Username == loginDTO.Username || u.Email == loginDTO.Username)).FirstOrDefaultAsync();
          
             if (user != null && BCry.Verify(loginDTO.Password, user.Password))
             {

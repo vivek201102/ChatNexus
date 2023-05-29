@@ -1,7 +1,9 @@
 import { Box, TextField } from "@mui/material";
+import { useContext } from "react";
+import { AskQuestionContext } from "../Context";
 
 const TitlePage = () => {
-
+    const {onInputChange, inputData} = useContext(AskQuestionContext);
     return (
         <>
             <Box mt={5} ml={3} fullWidth>
@@ -17,7 +19,13 @@ const TitlePage = () => {
                 
 
                 <div className="flex justify-center mt-10">
-                        <TextField variant="standard" fullWidth placeholder='Start your question with "What", "Why", "How", etc.'/>
+                        <TextField 
+                            variant="standard" 
+                            fullWidth
+                            name="title"
+                            value={inputData.title}
+                            onChange={onInputChange} 
+                            placeholder='Start your question with "What", "Why", "How", etc.'/>
                 </div>
                 <div className="h-40">
 

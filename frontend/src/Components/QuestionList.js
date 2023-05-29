@@ -1,57 +1,86 @@
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import apis from '../config/api';
 
-const columns = [
-    { field: 'id', headerName: 'SR', width: 70, align:"center",
-    headerAlign:"center" },
-    { field: 'Question', headerName: 'Question', width: 850 },
-   
-    {
-      field: 'TimeStamp',
-      headerName: 'Timestamp',
-      type: 'number',
-      width: 250,
-      align:"center",
-      headerAlign:"center"
-    },
-    {
-      field: 'asked_by',
-      headerName: 'Asked By',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      align:"center",
-      headerAlign:"center"
-    },
-  ];
+import TablePagination from '@mui/material/TablePagination';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { QuestionContext } from './Context';
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-  const rows = [
-    { id: 1, Question: 'Give difference between .NET framework and .NET core.', TimeStamp: 56, asked_by : 'vivek' },
-    { id: 2, Question: 'When to use REST api and when to use SOAP services in real time application ?', TimeStamp: 42, asked_by : 'vivek'  },
-    { id: 3,  Question: 'Is DSA complarsory to crack placement in IT company', TimeStamp: 45, asked_by : 'vivek' },
-    { id: 4,  Question: 'Error: react-router-dom module not found.', TimeStamp: 16, asked_by : 'vivek'  },
-    { id: 5, Question: 'Not able to manage Bootstrap components by extending base.html in Django', TimeStamp: 88, asked_by : 'vivek'  },
-    { id: 6, Question: 'How to use for-loops, if-else statements, and regex to iteratively run a software on command line', TimeStamp: 150, asked_by : 'vivek'  },
-    { id: 7, Question: "Why am I getting an AXUIElementCopyAttributeValue error while trying to get a TextArea's content in MS Word using Swift?", TimeStamp: 44, asked_by : 'vivek'  },
-    { id: 8, Question: 'How to properly register MemoryCache with IoC Container?', TimeStamp: 36, asked_by : 'vivek'  },
-    { id: 9, Question: 'How can I have a bad Time to First Byte on Core Web Vitals, but a good TTFB on all Pagespeed tests?  ', TimeStamp: 65, asked_by : 'vivek'  },
-  ];
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+ 
+}));
+
 
 const QuestionList = () => {
+  const {rows, clickRow} = React.useContext(QuestionContext);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+ 
+
+ 
+
     return (
         <>
             <div style={{  width: '100%' }} className='bg-primary-white'>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 10 },
-                    },
-                    }}
-                    pageSizeOptions={[10, 20, 50]}
-                    
-                />
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Id</StyledTableCell>
+                    <StyledTableCell align="left">Questions</StyledTableCell>
+                    <StyledTableCell align="center">TimeStamp</StyledTableCell>
+                    <StyledTableCell align="center">Asked By</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <StyledTableRow key={row.name} onClick={()=>{clickRow(row.id)}}>
+                      
+                      <StyledTableCell align="center">{row.id}</StyledTableCell>
+                      <StyledTableCell align="left">{row.title}</StyledTableCell>
+                      <StyledTableCell align="center">{row.timeStamp}</StyledTableCell>
+                      <StyledTableCell align="center">{row.asked_by}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+                
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableContainer>
             </div>
         </>
     );

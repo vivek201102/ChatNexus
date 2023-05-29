@@ -8,6 +8,8 @@ import * as React from 'react';
 import TagsInput from "./TagInput";
 import TitlePage from "./TitlePage";
 import Description from "./Description";
+import { AskQuestionContext } from "../Context";
+import { useForm } from "react-hook-form";
 
 const steps = ['Instructions & Question Title', 'Description & Image', 'Tags'];
 
@@ -16,8 +18,37 @@ const AddQuestion = ({open, setOpen}) => {
 
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
+    const [inputData, setInputData] = useState({
+        title: "",
+        description:"",
+        tags: ""
+    });
 
+    const { register,handleSubmit,reset } = useForm();
+    const [uploadState, setUploadState] = useState("initial");
+    const [image, setImage] = useState();
 
+    const handleUploadClick = (event) => {
+        var file = event.target.files[0];
+        const reader = new FileReader();
+        if (file) {
+          reader.readAsDataURL(file);
+          reader.onloadend = function (e) {
+            setImage(reader.result);
+            setUploadState("uploaded");
+          };
+          setImg(file);
+        }
+      };
+    
+      const handleResetClick = (event) => {
+        setImage(null);
+        setUploadState("initial");
+        reset({ logo: null });
+      };
+
+    const [img, setImg] = useState(null);
+    let tags = "";
 
     const isStepSkipped = (step) => {
         return skipped.has(step);
@@ -46,13 +77,19 @@ const AddQuestion = ({open, setOpen}) => {
     };
 
     function handleSelecetedTags(items) {
+        tags = items.toString();
         console.log(items);
+        console.log(tags);
       }
 
+    const onInputChange = (e) => {
+        setInputData(values => ({...values, [e.target.name]: e.target.value}))
+        
+    }
 
 
     return (
-        <>
+        <AskQuestionContext.Provider value={{onInputChange, img, setImg, inputData, setInputData, register,handleSubmit,reset, image, setImage, uploadState, handleUploadClick, handleResetClick}}>
             <Dialog open={open} fullWidth>
                 <DialogTitle >
                     <div className="flex justify-between">
@@ -135,7 +172,7 @@ const AddQuestion = ({open, setOpen}) => {
                         </Box>
                 </DialogContent>
             </Dialog>
-        </>
+        </AskQuestionContext.Provider>
     );
 }
 
