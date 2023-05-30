@@ -1,6 +1,6 @@
 ﻿namespace backend.DTO
 {
-    public class PostSollution
+    public class PostSolution
     {
         public string Answer { get; set; }
         public long UserId { get; set; }

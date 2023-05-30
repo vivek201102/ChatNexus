@@ -35,6 +35,7 @@ const Login = () => {
         e.preventDefault();
         axios.post(apis.loginUser, inputInfo)
         .then((res) => {
+            localStorage.setItem("user", JSON.stringify(res.data))
             toast.success("Login successful");
             navigate("/home")
         })

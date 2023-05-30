@@ -19,7 +19,7 @@ export default function TagsInput({ ...props }) {
 
   useEffect(() => {
     setSelectedItem(tags);
-  }, [tags]);
+  }, []);
 
   useEffect(() => {
     selectedTags(selectedItem);

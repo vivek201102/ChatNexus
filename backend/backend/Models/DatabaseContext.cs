@@ -8,7 +8,7 @@ namespace backend.Models
 
         public DbSet<User> Users { get; set; } = null;
         public DbSet<Question> Questions { get; set; } = null;
-        public DbSet<Sollution> Sollutions { get; set; } = null;
+        public DbSet<Solution> Solutions { get; set; } = null;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -3980,11 +3980,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\backend.csproj",
+      "projectUniqueName": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\backend.csproj",
+      "projectPath": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\vivek\\.nuget\\packages\\",
-      "outputPath": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\obj\\",
+      "outputPath": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

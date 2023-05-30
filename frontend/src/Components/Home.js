@@ -77,6 +77,7 @@ const Home = () => {
     const [open, setOpen] = useState(false);
     const [des, setDes] = useState(false)
     const [rows, setRows] = useState([]);
+    const [check, setCheck] = useState(false);
 
     useEffect(()=>{
         axios.get(apis.getAllQuestions)
@@ -94,7 +95,7 @@ const Home = () => {
         .catch((err)=>{
             console.log(err);
         })
-      }, []);
+      }, [check]);
 
     const clickRow = (id) => {
         setDes(true);
@@ -102,7 +103,7 @@ const Home = () => {
     }
 
     return (
-        <QuestionContext.Provider value={{rows, clickRow}} >
+        <QuestionContext.Provider value={{rows, clickRow, check, setCheck}} >
 
         <div className='bg-primary-light min-h-screen'>
             <Box sx={{display:"flex"}}>

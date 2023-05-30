@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9F8qGdrx3/+KUwXxpP6RhHwFUTgSgNJugCDAf1VmyosJ31JBjvPIsScEYTs5Sa6brMNcmNPfiBQkB5/ys/Zy0A==",
+  "dgSpecHash": "JOBct3mGTOwLkNLMf23cOXoukFMrHUmMFGPrqW/N0sfWbfjjIvMY8Ska+EnjgmM5DwBZfTWRfj4KL7ZfbIieqw==",
   "success": true,
-  "projectFilePath": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\backend.csproj",
+  "projectFilePath": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vivek\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\vivek\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

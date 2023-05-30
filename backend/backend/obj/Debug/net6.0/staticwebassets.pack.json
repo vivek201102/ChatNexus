@@ -1,7 +1,11 @@
 {
   "Files": [
     {
-      "Id": "D:\\Placement Prep\\Project\\DiscUs\\backend\\backend\\wwwroot\\Questions\\Screenshot 2023-02-26 123416.png",
+      "Id": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\wwwroot\\Questions\\1.png",
+      "PackagePath": "staticwebassets\\Questions\\1.png"
+    },
+    {
+      "Id": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\wwwroot\\Questions\\Screenshot 2023-02-26 123416.png",
       "PackagePath": "staticwebassets\\Questions\\Screenshot 2023-02-26 123416.png"
     },
     {

@@ -8,9 +8,12 @@ import * as React from 'react';
 import TagsInput from "./TagInput";
 import TitlePage from "./TitlePage";
 import Description from "./Description";
-import { AskQuestionContext } from "../Context";
+import { AskQuestionContext, QuestionContext } from "../Context";
 import { useForm } from "react-hook-form";
-
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import apis from "../../config/api";
+import axios from "axios";
 const steps = ['Instructions & Question Title', 'Description & Image', 'Tags'];
 
 
@@ -21,9 +24,9 @@ const AddQuestion = ({open, setOpen}) => {
     const [inputData, setInputData] = useState({
         title: "",
         description:"",
-        tags: ""
     });
-
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
+    const {check, setCheck} = React.useContext(QuestionContext);
     const { register,handleSubmit,reset } = useForm();
     const [uploadState, setUploadState] = useState("initial");
     const [image, setImage] = useState();
@@ -43,27 +46,93 @@ const AddQuestion = ({open, setOpen}) => {
     
       const handleResetClick = (event) => {
         setImage(null);
+        setImg(null);
         setUploadState("initial");
         reset({ logo: null });
       };
 
     const [img, setImg] = useState(null);
-    let tags = "";
+    const [tags, setTags] = useState([]);
 
-    const isStepSkipped = (step) => {
-        return skipped.has(step);
-    };
+    
 
     const handleNext = () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
+        if(activeStep == 0){
+            if(inputData.title == ""){
+                toast.error("Title can't be empty")
+            }
+            else{
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            }
         }
+        else if(activeStep == 1){
+            if(inputData.description == ""){
+                toast.error("Description can't be empty")
+            }
+            else{
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            }
+        }
+        else{
+            console.log(inputData);
+            console.log(img);
+            console.log(tags);
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
+        }
+        
+        
     };
+
+    const handleFinish = () => {
+        console.log(inputData);
+            console.log(img);
+            console.log(tags);
+            if(user == null){
+                toast.error("Please login to ask question");
+            }
+            else if(img == null){
+                console.log("without image")
+                console.log(user)
+                axios.post(apis.postQuestionWithoutImage, 
+                    {
+                        title: inputData.title,
+                        description: inputData.description,
+                        tags : tags.toString(),
+                        userId: user.id
+                    })
+                    .then((res)=>{
+                        setOpen(false);
+                        if(check)
+                            setCheck(false);
+                        else
+                            setCheck(true);
+                        
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+            }
+            else{
+                var formData = new FormData();
+                formData.append("title", inputData.title);
+                formData.append("description", inputData.description);
+                formData.append("tags", tags.toString());
+                formData.append("image", img);
+                formData.append("userId", user.id);
+                
+                axios.post(apis.postQuestion, formData, {headers:{"Content-Type":"multipart/form-data"}})
+                .then((res)=>{
+                    setOpen(false);
+                    if(check)
+                        setCheck(false);
+                    else
+                        setCheck(true);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            }
+    }
 
 
     const handleBack = () => {
@@ -77,9 +146,8 @@ const AddQuestion = ({open, setOpen}) => {
     };
 
     function handleSelecetedTags(items) {
-        tags = items.toString();
-        console.log(items);
-        console.log(tags);
+        setTags(items);
+        console.log(tags)
       }
 
     const onInputChange = (e) => {
@@ -147,6 +215,7 @@ const AddQuestion = ({open, setOpen}) => {
                                             id="tags"
                                             name="tags"
                                             placeholder="add Tags"
+                                            tags={tags}
                                             label="tags" />
                                 </Box>
                             }
@@ -162,16 +231,20 @@ const AddQuestion = ({open, setOpen}) => {
                                 </Button>
                                 <Box sx={{ flex: '1 1 auto' }} />
                                 
-
-                                <Button onClick={handleNext}>
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                {activeStep === steps.length - 1 ?
+                                <Button onClick={handleFinish}>
+                                 Finish
                                 </Button>
+                                :
+                                <Button onClick={handleNext}>Next</Button>
+                                 }
                             </Box>
                             </React.Fragment>
                         )}
                         </Box>
                 </DialogContent>
             </Dialog>
+            <ToastContainer />
         </AskQuestionContext.Provider>
     );
 }
