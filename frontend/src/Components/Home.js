@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import Navbar from './Navbar'
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Typography, InputBase } from '@mui/material';
+import { Box, Typography, InputBase, AppBar, Toolbar, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddQuestion from "./AdddQuestion/AddQuestion";
 import QuestionList from "./QuestionList";
@@ -10,6 +10,11 @@ import axios from "axios";
 import apis from "../config/api";
 import { QuestionContext } from "./Context";
 import { toast } from "react-toastify";
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import Divider from '@mui/material/Divider';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -20,6 +25,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
   }));
 
+  const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -78,6 +86,9 @@ const Home = () => {
     const [des, setDes] = useState(false)
     const [rows, setRows] = useState([]);
     const [check, setCheck] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [id, setId] = useState();
+    const [question, setQuestion] = useState();
 
     useEffect(()=>{
         axios.get(apis.getAllQuestions)
@@ -88,7 +99,7 @@ const Home = () => {
             data.forEach(element => {
               console.log(element);
               console.log(new Date(element.timeStamp));
-              info.push({id: element.id, title: element.title, timeStamp: new Date(element.timeStamp).toLocaleDateString("fr-FR").toString(), asked_by: element.user.username});
+              info.push({id: element.id, title: element.title, timeStamp: new Date(element.timeStamp).toLocaleDateString("fr-FR").toString(), asked_by: element.user.username, description: element.description, tags: element.tags});
             });
             setRows(info);
         })
@@ -97,10 +108,19 @@ const Home = () => {
         })
       }, [check]);
 
-    const clickRow = (id) => {
-        setDes(true);
+    const clickRow = (id, rowIndex) => {
+        setId(id);
+        setQuestion(rows[rowIndex]);
+        setOpenDialog(true);
         
     }
+    const handleClickOpen = () => {
+        setOpenDialog(true);
+      };
+    
+      const handleClose = () => {
+        setOpenDialog(false);
+      };
 
     return (
         <QuestionContext.Provider value={{rows, clickRow, check, setCheck}} >
@@ -126,13 +146,37 @@ const Home = () => {
 
                     <Box>
                         <AddQuestion open={open} setOpen={setOpen} />
-                        {!des ? <QuestionList /> : null }
-                        {des ? <QuestionDesc /> : null }
+                        <QuestionList />
                     </Box>
                 </Box>
             </Box>
         </div>
+            <Dialog
+            fullScreen
+            open={openDialog}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+        >
+            <AppBar sx={{ position: 'relative', backgroundColor:"#FCF7FF", color:"black" }}>
+            <Toolbar>
+                <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+                >
+                <CloseIcon />
+                </IconButton>
+                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                </Typography>
+            </Toolbar>
+            </AppBar>
+            <Box sx={{ margin:'2%' }}>
 
+                <QuestionDesc id={id} question={question}/>
+            </Box>
+            
+        </Dialog>
         </QuestionContext.Provider>
     );
 }

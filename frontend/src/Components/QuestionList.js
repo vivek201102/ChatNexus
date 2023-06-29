@@ -59,8 +59,8 @@ const QuestionList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <StyledTableRow key={row.name} onClick={()=>{clickRow(row.id)}}>
+                  {rows.map((row, index) => (
+                    <StyledTableRow key={row.name} onClick={()=>{clickRow(row.id, index)}}>
                       
                       <StyledTableCell align="center">{row.id}</StyledTableCell>
                       <StyledTableCell align="left">{row.title}</StyledTableCell>

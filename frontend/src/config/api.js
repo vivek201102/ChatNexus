@@ -5,7 +5,9 @@ const apis = {
     loginUser: `${baseUrl}/User/Login`,
     getAllQuestions: `${baseUrl}/Question`,
     postQuestion: `${baseUrl}/Question`,
-    postQuestionWithoutImage: `${baseUrl}/Question/WithoutImage`
+    postQuestionWithoutImage: `${baseUrl}/Question/WithoutImage`,
+    getAnswer: `${baseUrl}/Answer`,
+    postAnswer: `${baseUrl}/Answer`
 }
 
 export default apis;

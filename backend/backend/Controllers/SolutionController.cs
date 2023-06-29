@@ -21,20 +21,25 @@ namespace backend.Controllers
             if (_context.Solutions == null || _context.Questions == null)
                 return NotFound("Null Context");
 
-            List<Solution> Solutions = _context.Solutions.Where(s => s.QuestionId == questionId).ToList();
-
+            var solutions = _context.Solutions.Where(s => s.QuestionId == questionId)?.ToArray();
+            List<AnswersResponse> answerResponses = new List<AnswersResponse>();
             Question q = await _context.Questions.FindAsync(questionId);
-
-            if (q == null)
-                return NotFound("Question Not Found");
-            
-            foreach (Solution s in Solutions)
+            foreach(var s in solutions)
             {
-                s.User = await _context.Users.FindAsync(s.UserId);
-                s.Question = q;
+                AnswersResponse answer = new AnswersResponse();
+                answer.QuestionId = s.QuestionId;
+                answer.Question = q;
+                answer.Answer = s.Answer;
+                answer.UserId = s.UserId;
+                answer.Id = s.Id;
+                answer.TimeStamp = s.TimeStamp;
+                User u = await _context.Users.FindAsync(s.UserId);
+                answer.User = u;
+                answerResponses.Add(answer);
             }
+           
 
-            return Ok(Solutions);
+            return Ok(answerResponses);
         }
 
         [HttpPost]
@@ -58,7 +63,7 @@ namespace backend.Controllers
 
                 Solution.Question = question;
                 Solution.Answer = postSolution.Answer;
-                Solution.User = user;
+                Solution.UserId = postSolution.UserId;
                 Solution.TimeStamp = DateTime.UtcNow;
 
                 _context.Solutions.Add(Solution);
@@ -69,6 +74,24 @@ namespace backend.Controllers
                 throw;
             }
             return Ok(Solution);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Solution>> PutAnswer(Solution solution)
+        {
+            if (_context.Solutions == null)
+                return NotFound();
+            try
+            {
+                _context.Entry(solution).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                    throw;
+            }
+
+            return Ok(solution);
         }
 
 

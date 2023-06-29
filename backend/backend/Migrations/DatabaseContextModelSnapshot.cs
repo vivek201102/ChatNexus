@@ -30,6 +30,9 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long>("AskedBy")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,12 +57,12 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AskedBy");
 
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("backend.Models.Sollution", b =>
+            modelBuilder.Entity("backend.Models.Solution", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,9 +87,7 @@ namespace backend.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Sollutions");
+                    b.ToTable("Solutions");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -129,30 +130,22 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("AskedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Models.Sollution", b =>
+            modelBuilder.Entity("backend.Models.Solution", b =>
                 {
                     b.HasOne("backend.Models.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Question");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

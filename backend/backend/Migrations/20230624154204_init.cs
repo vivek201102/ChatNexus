@@ -40,20 +40,22 @@ namespace backend.Migrations
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
+                    AskedBy = table.Column<long>(type: "bigint", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Questions_Users_AskedBy",
+                        column: x => x.AskedBy,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sollutions",
+                name: "Solutions",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -61,44 +63,35 @@ namespace backend.Migrations
                     Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     QuestionId = table.Column<long>(type: "bigint", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sollutions", x => x.Id);
+                    table.PrimaryKey("PK_Solutions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sollutions_Questions_QuestionId",
+                        name: "FK_Solutions_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Sollutions_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_UserId",
+                name: "IX_Questions_AskedBy",
                 table: "Questions",
-                column: "UserId");
+                column: "AskedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sollutions_QuestionId",
-                table: "Sollutions",
+                name: "IX_Solutions_QuestionId",
+                table: "Solutions",
                 column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sollutions_UserId",
-                table: "Sollutions",
-                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Sollutions");
+                name: "Solutions");
 
             migrationBuilder.DropTable(
                 name: "Questions");

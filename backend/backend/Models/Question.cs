@@ -10,7 +10,7 @@ namespace backend.Models
         public string Tags { get; set; }
         public string Image { get; set; }
         public long UserId { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("AskedBy")]
         public virtual User User { get; set; }
         public DateTime TimeStamp { get; set; }
     }

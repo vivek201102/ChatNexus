@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/hUSgrUGQ4gnk1e1QAUyrsJuXXJw93RDhK2ZDOkfll8=",
+  "Hash": "q+i1gjSsLNSuJwPwBS3HNREL/oyEog/Sb6CvfoT3cjM=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Questions\\Screenshot 2023-02-26 123416.png"
+    },
+    {
+      "Identity": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\wwwroot\\Questions\\Screenshot 2023-02-26 123508.png",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Placement Prep\\Project\\ChatNexus\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "Questions/Screenshot 2023-02-26 123508.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Questions\\Screenshot 2023-02-26 123508.png"
     }
   ]
 }

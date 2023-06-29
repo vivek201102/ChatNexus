@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace backend.Models
 {
@@ -10,14 +11,5 @@ namespace backend.Models
         public DbSet<Question> Questions { get; set; } = null;
         public DbSet<Solution> Solutions { get; set; } = null;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            
-            foreach(var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
-            }
-        }
     }
 }
